@@ -102,8 +102,7 @@ col = []
 height, width, channels = img.shape
 stred = [height/2,width/2]
 
-col=[[[[0 for x in range(4)] for ii in range(LS+2)] for j in... 
- ... range(width)] for i in range(height)] 
+col=[[[[0 for x in range(4)] for ii in range(LS+2)] for j in range(width)] for i in range(height)] 
     
 for i in range(height):
     for j in range(width):
@@ -136,25 +135,20 @@ for i in range(height):
                 for jj in range(L - 2):
                     index = (ii*Krok + jj + 1)%L
                     C = [Lambda[index][1],Lambda[index][2]]
-                    D = [Lambda[(index + 1)%L][1],Lambda[...
-...(index + 1%L][2]]
+                    D = [Lambda[(index + 1)%L][1],Lambda[(index + 1%L][2]]
                 
                     P = inter(A,XX,C,D)
 
                     if V(C,P) + V(D,P) - V(C,D) < 0.0000000001:
                                            
-                        KK = A[1]*(P[0]-XX[0])/(P[1]*(XX[0]...
-... - A[0]))
+                        KK = A[1]*(P[0]-XX[0])/(P[1]*(XX[0] - A[0]))
                          
                         col[i][j][ii][0] = lum * KK / (KK + 1)
                         col[i][j][ii][1] = index
-                        KK = C[1]*(D[0] - P[0])/(D[1]*(P[0]...
-... - C[0]))
+                        KK = C[1]*(D[0] - P[0])/(D[1]*(P[0] - C[0]))
 
-                        col[i][j][ii][2] = (lum - ...
-... col[i][j][ii][0])* KK / (KK + 1)
-                        col[i][j][ii][3] = lum-col[i][j][ii][0]... 
-...- col[i][j][ii][2]
+                        col[i][j][ii][2] = (lum - col[i][j][ii][0])* KK / (KK + 1)
+                        col[i][j][ii][3] = lum-col[i][j][ii][0]- col[i][j][ii][2]
 
                         jj = L - 2
                 
@@ -203,9 +197,7 @@ for w in range(Frames):
 
                 #Nyní je dopočítána poloha pozorovatele
 # v soustavě zdroje.
-                P = [Start[0]*height +t*Vx[0]+Accel[0]*t**2...
-/ 2,Start[1]*width + t*Vx[1] + Accel[1]*t**2 / 2,Start[2] +...
-... t*Vx[2] + Accel[2]*t**2 / 2]
+                P = [Start[0]*height +t*Vx[0]+Accel[0]*t**2/ 2,Start[1]*width + t*Vx[1] + Accel[1]*t**2 / 2,Start[2] + t*Vx[2] + Accel[2]*t**2 / 2]
                 #Výpočet vlnového vektoru v soustavě zdroje;
 # je dán jako rozdíl poloh pozorovatele a zdroje 
                 kv = [P[0] - Z[0],P[1] - Z[1],P[2] - Z[2]]
@@ -215,8 +207,7 @@ for w in range(Frames):
                     cost = 0
                 else:
                 #Kosinus [hlu theta; vztah 3.7
-                    cost = (Vx[0]*kv[0]+Vx[1]*kv[1]...
- ... +Vx[2]*kv[2]) / (VV(Vx)*VV(kv))
+                    cost = (Vx[0]*kv[0]+Vx[1]*kv[1]+Vx[2]*kv[2]) / (VV(Vx)*VV(kv))
 
                 #Signál v našem případě není ve frekvenční 
 #reprezentaci, ale je vyjádřen pomocí vlnové délky. Jedná se
@@ -228,41 +219,30 @@ for w in range(Frames):
                     Ind2 = int((col[i][j][ii][1] + Min)*K) - Min
 #Vlnová délka, jejíž hodnota je uložena na pozici [i][j][ii][1]
 # pole col je dopplerovksy posunuta
-                    Ind3 = int(((col[i][j][ii][1] + 1)%L +...
-... Min)*K) - Min #Posunutí vedlejší vlnové délky
+                    Ind3 = int(((col[i][j][ii][1] + 1)%L + Min)*K) - Min #Posunutí vedlejší vlnové délky
                     Ind = col[i][j][ii][1]
 
                     #Pokud se posunuté vlnové délky nacházejí
 # ve viditelném spektru, je proveden výpočet 1.1 smíchání barev 
-                    if K * Spektrum[ii][0] >= Min2 and K *... 
-... Spektrum[ii][0] <= Max2:
-                        L_citX =L_citX+(Lambda[int((ii*Krok...
-... + Min2)*K) - Min2][1]/Lambda[int((ii*Krok +Min2)*K)-...
- ... Min2][2])*col[i][j][ii][0] #Jsou započteny intenzity
+                    if K * Spektrum[ii][0] >= Min2 and K * Spektrum[ii][0] <= Max2:
+                        L_citX =L_citX+(Lambda[int((ii*Krok+ Min2)*K) - Min2][1]/Lambda[int((ii*Krok +Min2)*K)- Min2][2])*col[i][j][ii][0] #Jsou započteny intenzity
 # původních barev, ty však mají nyní nové souřadnice odpovídající
 # posunutým barvám
                         L_citY = L_citY + col[i][j][ii][0]
-                        L_jmen = L_jmen + ... 
-... col[i][j][ii][0]/Lambda[int((ii*Krok + Min2)*K) - Min2][2]
+                        L_jmen = L_jmen + col[i][j][ii][0]/Lambda[int((ii*Krok + Min2)*K) - Min2][2]
                         Y = Y + col[i][j][ii][0]
                        
                                                                                                              
-                    if K * Lambda[Ind][0] >= Min and K * ... 
-... Lambda[Ind][0] <= Max:
-                        L_citX = L_citX + ... 
-... (Lambda[Ind2][1]/Lambda[Ind2][2])*col[i][j][ii][2]
+                    if K * Lambda[Ind][0] >= Min and K * Lambda[Ind][0] <= Max:
+                        L_citX = L_citX +  (Lambda[Ind2][1]/Lambda[Ind2][2])*col[i][j][ii][2]
                         L_citY = L_citY + col[i][j][ii][2]
-                        L_jmen = L_jmen + ...
-... col[i][j][ii][2]/Lambda[Ind2][2]
+                        L_jmen = L_jmen + col[i][j][ii][2]/Lambda[Ind2][2]
                         Y = Y + col[i][j][ii][2]
                       
-                    if K * Lambda[(Ind + 1)\%L][0] >= Min ...
-... and K * Lambda[(Ind + 1)\%L][0] <= Max:
-                        L_citX = L_citX + ... 
-... (Lambda[Ind3][1]/Lambda[Ind3][2])*col[i][j][ii][3]
+                    if K * Lambda[(Ind + 1)\%L][0] >= Min and K * Lambda[(Ind + 1)\%L][0] <= Max:
+                        L_citX = L_citX + (Lambda[Ind3][1]/Lambda[Ind3][2])*col[i][j][ii][3]
                         L_citY = L_citY + col[i][j][ii][3]
-                        L_jmen = L_jmen + ...
- ... col[i][j][ii][3]/Lambda[Ind3][2]
+                        L_jmen = L_jmen +  col[i][j][ii][3]/Lambda[Ind3][2]
                         Y = Y + col[i][j][ii][3]
 
                     if L_jmen > 0:
@@ -305,20 +285,17 @@ for w in range(Frames):
                     sXXrb = V(XX,sXrb)
 
                     
-                    if abs((V(sR,sXrg) + V(sG,sXrg)) - RG)>... 
-... 0.0000000001: #Pokud je argument roven nule, projekce bodu XX 
+                    if abs((V(sR,sXrg) + V(sG,sXrg)) - RG)> 0.0000000001: #Pokud je argument roven nule, projekce bodu XX 
 #leží na úsečce sRsG, tedy na straně trojúhelníku; jinak jeho 
 #projekce neleží na této straně trojůhelníku a nemá smysl 
 #uvožovat o této projekci
 
                         sXXrg = sXXrg + sXXgb + sXXrb+RXX+GXX+BXX
-                    if abs((V(sG,sXgb) + V(sB,sXgb)) - GB)>... 
-... 0.0000000001:#Pokud je argument roven nule, projekce bodu 
+                    if abs((V(sG,sXgb) + V(sB,sXgb)) - GB)> 0.0000000001:#Pokud je argument roven nule, projekce bodu 
 #XX leží na úsečce sBsG
                         
                         sXXgb = sXXrg + sXXgb + sXXrb+RXX+GXX+BXX
-                    if abs((V(sR,sXrb) + V(sB,sXrb)) - RB) >...
-... 0.0000000001:#Pokud je argument roven nule, projekce bodu XX
+                    if abs((V(sR,sXrb) + V(sB,sXrb)) - RB) > 0.0000000001:#Pokud je argument roven nule, projekce bodu XX
 # leží na úsečce sRsB
                         
                         sXXrb = sXXrg + sXXgb + sXXrb+RXX+GXX+BXX
@@ -331,8 +308,7 @@ for w in range(Frames):
                     #a tedy i v prostoru sRGB a není třeba jej
 # projektovat
                     
-                    if S_tr0 == S_tr or abs(S_tr0 - S_tr) <...
-... 0.0000000001  :
+                    if S_tr0 == S_tr or abs(S_tr0 - S_tr) < 0.0000000001  :
                         NotOK = 0*K #Obsahy se shodují a bod XX
 # leží v prostoru sRGB
                             
@@ -340,14 +316,12 @@ for w in range(Frames):
                     #Bod XX leží mimo náš trojúhelník;
 # na trojúhelníku se pokusíme najít bod, který je mu nejblíž
                     
-                        if sXXrg == min(sXXrg, sXXgb, sXXrb,...
-... RXX, GXX, BXX):
+                        if sXXrg == min(sXXrg, sXXgb, sXXrb, RXX, GXX, BXX):
                             x = sXrg[0] 
                             y = sXrg[1]
 
                             
-                        elif sXXgb == min(sXXgb, sXXrb, RXX, ...
-...GXX,BXX):
+                        elif sXXgb == min(sXXgb, sXXrb, RXX,GXX,BXX):
                             x = sXgb[0]
                             y = sXgb[1]
                             
@@ -420,12 +394,8 @@ for w in range(Frames):
             #Do dostatečně velkých obrázků zapíšeme do spodního
 # rohu rychlost, pro kterou byly dopočítány
             if height > 100 and width > 100:
-                cv2.putText(images[w],str(Vx),...
-... (int(width/20),height -int(height/20)), ...
-...cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0,200,200),2)
-                cv2.putText(images[w],str(Vx), ...
-...(int(width/20),height -int(height/20)), ...
-...cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0,0,0),1)
+                cv2.putText(images[w],str(Vx),(int(width/20),height -int(height/20)),cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0,200,200),2)
+                cv2.putText(images[w],str(Vx),(int(width/20),height -int(height/20)), cv2.FONT_HERSHEY_SIMPLEX, 0.5,(0,0,0),1)
 
     #Vytvoření pracně vytvořeného obrázku s posunutými barvami
     cv2.imwrite(name,images[w])
