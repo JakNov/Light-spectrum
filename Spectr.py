@@ -115,7 +115,7 @@ def Spektr(R,G,B):
 #bude partnerkou pro A
                 D = [Lambda[(index +1)%L][1],Lambda[(index...
 
-						...  +  1)\%L][2]]
+						...  +  1)%L][2]]
             
                 P = inter(A,XX,C,D)#průsečík přímky AXX a CD
                 
