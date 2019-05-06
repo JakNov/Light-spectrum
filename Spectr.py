@@ -113,9 +113,7 @@ def Spektr(R,G,B):
                 C = [Lambda[index][1],Lambda[index][2]]
 #dvě sousední barvy a my vyzkoušíme, jestli jejich mix
 #bude partnerkou pro A
-                D = [Lambda[(index +1)%L][1],Lambda[(index...
-
-						...  +  1)%L][2]]
+                D = [Lambda[(index +1)%L][1],Lambda[(index +  1)%L][2]]
             
                 P = inter(A,XX,C,D)#průsečík přímky AXX a CD
                 
@@ -149,8 +147,7 @@ def Spektr(R,G,B):
     for i in range(LS):
         Spc[int(i*Krok)][1] = Spc[int(i*Krok)][1] + col[i][0]
         Spc[col[i][1]][1] = Spc[col[i][1]][1] + col[i][2]
-        Spc[(col[i][1]+1)%L][1] = Spc[(col[i][1]+1)%L][1]...
-... + col[i][3]
+        Spc[(col[i][1]+1)%L][1] = Spc[(col[i][1]+1)%L][1] + col[i][3]
 
     return(Spc) #vrátí pole vlnových délek s intenzitou,
 #kterou jsou ve spektru dané barvy se souřadnicemi RGB zastoupeny
