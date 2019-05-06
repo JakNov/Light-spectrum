@@ -109,11 +109,11 @@ def Spektr(R,G,B):
             for j in range(L - 2):
 #najde barvu spektrální barvu A a začne od ní zkoušet,
 #do kterého intervalu se trefí
-                index = (i*Krok + j + 1)\%L 
+                index = (i*Krok + j + 1)%L 
                 C = [Lambda[index][1],Lambda[index][2]]
 #dvě sousední barvy a my vyzkoušíme, jestli jejich mix
 #bude partnerkou pro A
-                D = [Lambda[(index +1)\%L][1],Lambda[(index...
+                D = [Lambda[(index +1)%L][1],Lambda[(index...
 
 						...  +  1)\%L][2]]
             
@@ -149,7 +149,7 @@ def Spektr(R,G,B):
     for i in range(LS):
         Spc[int(i*Krok)][1] = Spc[int(i*Krok)][1] + col[i][0]
         Spc[col[i][1]][1] = Spc[col[i][1]][1] + col[i][2]
-        Spc[(col[i][1]+1)\%L][1] = Spc[(col[i][1]+1)\%L][1]...
+        Spc[(col[i][1]+1)%L][1] = Spc[(col[i][1]+1)%L][1]...
 ... + col[i][3]
 
     return(Spc) #vrátí pole vlnových délek s intenzitou,
