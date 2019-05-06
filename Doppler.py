@@ -239,7 +239,7 @@ for w in range(Frames):
                         L_jmen = L_jmen + col[i][j][ii][2]/Lambda[Ind2][2]
                         Y = Y + col[i][j][ii][2]
                       
-                    if K * Lambda[(Ind + 1)\%L][0] >= Min and K * Lambda[(Ind + 1)\%L][0] <= Max:
+                    if K * Lambda[(Ind + 1)%L][0] >= Min and K * Lambda[(Ind + 1)%L][0] <= Max:
                         L_citX = L_citX + (Lambda[Ind3][1]/Lambda[Ind3][2])*col[i][j][ii][3]
                         L_citY = L_citY + col[i][j][ii][3]
                         L_jmen = L_jmen +  col[i][j][ii][3]/Lambda[Ind3][2]
