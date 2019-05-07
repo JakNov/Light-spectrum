@@ -135,7 +135,7 @@ for i in range(height):
                 for jj in range(L - 2):
                     index = (ii*Krok + jj + 1)%L
                     C = [Lambda[index][1],Lambda[index][2]]
-                    D = [Lambda[(index + 1)%L][1],Lambda[(index + 1%L][2]]
+                    D = [Lambda[(index + 1)%L][1],Lambda[(index + 1)%L][2]]
                 
                     P = inter(A,XX,C,D)
 
