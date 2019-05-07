@@ -78,7 +78,7 @@ def Spektr(R,G,B):
     #partnerku k barvě A
     col = []
     col = [[0 for i in range(4)] for j in range(LS+2)]
-        souc = int(R)+int(B)+int(G)
+    souc = int(R)+int(B)+int(G)
     if  souc > 0:
         R = scale(R)
         G = scale(G)
